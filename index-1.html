@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal List</title>
+  <meta name="description" content="Universal List — Geometry Dash Demonlist">
+  <style>
+    :root{
+      --bg:#090a10;
+      --panel:#11131d;
+      --panel2:#171a27;
+      --border:#292d40;
+      --text:#f4f5fb;
+      --muted:#9da3b8;
+      --accent:#b9a1ff;
+      --accent2:#7c63d9;
+      --danger:#ff657a;
+      --gold:#ffd76a;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 50% -10%, #27203d 0, transparent 42%),
+        var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit;text-decoration:none}
+    button,input{font:inherit}
+    .wrap{width:min(1100px,calc(100% - 28px));margin:auto}
+    header{
+      border-bottom:1px solid var(--border);
+      background:rgba(9,10,16,.88);
+      backdrop-filter:blur(12px);
+      position:sticky;top:0;z-index:10;
+    }
+    nav{
+      min-height:68px;display:flex;align-items:center;
+      justify-content:space-between;gap:16px;
+    }
+    .brand{font-weight:900;letter-spacing:.08em;font-size:20px}
+    .brand span{color:var(--accent)}
+    .navlinks{display:flex;gap:8px}
+    .navlinks a,.navlinks button{
+      border:1px solid transparent;background:transparent;color:var(--muted);
+      padding:9px 12px;border-radius:10px;cursor:pointer;
+    }
+    .navlinks a:hover,.navlinks button:hover{
+      color:var(--text);background:var(--panel);border-color:var(--border)
+    }
+    .hero{padding:58px 0 30px;text-align:center}
+    .eyebrow{
+      color:var(--accent);font-weight:800;font-size:12px;
+      letter-spacing:.16em;text-transform:uppercase
+    }
+    h1{font-size:clamp(42px,9vw,76px);margin:8px 0 10px;line-height:.95}
+    .hero p{max-width:650px;margin:0 auto;color:var(--muted);font-size:16px}
+    .stats{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:30px 0
+    }
+    .stat,.card{
+      background:linear-gradient(145deg,var(--panel2),var(--panel));
+      border:1px solid var(--border);border-radius:16px
+    }
+    .stat{padding:18px;text-align:center}
+    .stat strong{display:block;font-size:25px}
+    .stat small{color:var(--muted)}
+    .toolbar{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:26px 0 14px
+    }
+    .search{
+      flex:1;min-width:220px;background:var(--panel);border:1px solid var(--border);
+      color:var(--text);padding:13px 15px;border-radius:12px;outline:none
+    }
+    .search:focus{border-color:var(--accent)}
+    .section-title{margin:34px 0 12px;font-size:24px}
+    .list{display:grid;gap:10px;padding-bottom:60px}
+    .level{
+      display:grid;grid-template-columns:70px 1fr auto;
+      align-items:center;gap:16px;padding:15px 17px;
+      transition:.15s;cursor:pointer
+    }
+    .level:hover{transform:translateY(-1px);border-color:#494d68}
+    .rank{font-size:25px;font-weight:900;text-align:center;color:var(--accent)}
+    .level:nth-child(1) .rank{color:var(--gold)}
+    .name{font-size:18px;font-weight:800}
+    .meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:5px}
+    .difficulty{
+      padding:7px 10px;border-radius:999px;border:1px solid var(--border);
+      color:#d9d0ff;font-size:12px;font-weight:800;white-space:nowrap
+    }
+    .empty{padding:30px;text-align:center;color:var(--muted)}
+    footer{border-top:1px solid var(--border);padding:25px 0 40px;color:var(--muted);font-size:13px}
+    .modal{
+      position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;
+      align-items:center;justify-content:center;padding:18px;z-index:20
+    }
+    .modal.open{display:flex}
+    .modalbox{
+      width:min(620px,100%);background:var(--panel);
+      border:1px solid var(--border);border-radius:18px;padding:24px
+    }
+    .modalhead{display:flex;justify-content:space-between;gap:15px}
+    .close{border:0;background:var(--panel2);color:var(--text);border-radius:9px;padding:8px 11px;cursor:pointer}
+    .details{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0}
+    .detail{padding:13px;background:var(--panel2);border-radius:11px}
+    .detail small{display:block;color:var(--muted);margin-bottom:4px}
+    @media(max-width:650px){
+      .navlinks a:nth-child(2){display:none}
+      .stats{grid-template-columns:1fr}
+      .level{grid-template-columns:45px 1fr}
+      .difficulty{grid-column:2;justify-self:start}
+      .rank{font-size:20px}
+      .name{font-size:16px}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#">UNIVERSAL<span> LIST</span></a>
+      <div class="navlinks">
+        <a href="#list">Demonlist</a>
+        <a href="#about">About</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Geometry Dash Community List</div>
+    <h1>Universal List</h1>
+    <p>Una lista comunitaria de niveles extremos de Geometry Dash.</p>
+  </section>
+
+  <section class="stats" aria-label="Estadísticas">
+    <div class="stat"><strong id="levelCount">0</strong><small>Niveles listados</small></div>
+    <div class="stat"><strong id="topDifficulty">—</strong><small>Dificultad máxima</small></div>
+    <div class="stat"><strong>2.2</strong><small>Versión objetivo</small></div>
+  </section>
+
+  <section id="list">
+    <h2 class="section-title">Demonlist</h2>
+    <div class="toolbar">
+      <input id="search" class="search" type="search" placeholder="Buscar nivel o creador..." aria-label="Buscar nivel o creador">
+    </div>
+    <div id="levels" class="list"></div>
+  </section>
+
+  <section id="about">
+    <h2 class="section-title">Sobre Universal List</h2>
+    <div class="card" style="padding:20px;margin-bottom:45px">
+      <p style="color:var(--muted);line-height:1.7;margin:0">
+        Universal List es un proyecto comunitario. Esta primera versión es estática:
+        los niveles están definidos dentro del propio archivo <code>index.html</code>.
+        Más adelante puedes conectarla a una base de datos y añadir un panel de administración.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Universal List · Fan project · Not affiliated with RobTop Games.</div>
+</footer>
+
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modalbox">
+    <div class="modalhead">
+      <div>
+        <div class="eyebrow">Level information</div>
+        <h2 id="modalTitle" style="margin:5px 0 0"></h2>
+      </div>
+      <button class="close" id="closeModal" type="button">✕</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+  // EDITA ESTA LISTA PARA AÑADIR TUS NIVELES.
+  const levels = [
+    {rank:1, name:"Universal Core", creator:"YourName", verifier:"YourName", id:"00000000", difficulty:"Extreme Demon"},
+    {rank:2, name:"Level Example", creator:"Creator2", verifier:"Player2", id:"00000001", difficulty:"Extreme Demon"},
+    {rank:3, name:"Another Example", creator:"Creator3", verifier:"Player3", id:"00000002", difficulty:"Extreme Demon"},
+    {rank:4, name:"Future Level", creator:"Creator4", verifier:"Player4", id:"00000003", difficulty:"Extreme Demon"},
+    {rank:5, name:"Placeholder", creator:"Creator5", verifier:"Player5", id:"00000004", difficulty:"Extreme Demon"}
+  ];
+
+  const levelsEl = document.getElementById("levels");
+  const searchEl = document.getElementById("search");
+  const modal = document.getElementById("modal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalBody = document.getElementById("modalBody");
+
+  document.getElementById("levelCount").textContent = levels.length;
+  document.getElementById("topDifficulty").textContent =
+    levels.length ? levels[0].difficulty : "—";
+
+  function render(query=""){
+    const q = query.trim().toLowerCase();
+    const filtered = levels.filter(l =>
+      l.name.toLowerCase().includes(q) ||
+      l.creator.toLowerCase().includes(q) ||
+      l.verifier.toLowerCase().includes(q)
+    );
+
+    if(!filtered.length){
+      levelsEl.innerHTML = '<div class="card empty">No se encontraron niveles.</div>';
+      return;
+    }
+
+    levelsEl.innerHTML = filtered.map(l => `
+      <article class="card level" tabindex="0" data-rank="${l.rank}">
+        <div class="rank">#${l.rank}</div>
+        <div>
+          <div class="name">${escapeHtml(l.name)}</div>
+          <div class="meta">
+            <span>Creator: ${escapeHtml(l.creator)}</span>
+            <span>Verifier: ${escapeHtml(l.verifier)}</span>
+            <span>ID: ${escapeHtml(l.id)}</span>
+          </div>
+        </div>
+        <div class="difficulty">${escapeHtml(l.difficulty)}</div>
+      </article>
+    `).join("");
+
+    levelsEl.querySelectorAll(".level").forEach(card => {
+      const open = () => openLevel(Number(card.dataset.rank));
+      card.addEventListener("click", open);
+      card.addEventListener("keydown", e => {
+        if(e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+      });
+    });
+  }
+
+  function openLevel(rank){
+    const l = levels.find(x => x.rank === rank);
+    if(!l) return;
+    modalTitle.textContent = `#${l.rank} — ${l.name}`;
+    modalBody.innerHTML = `
+      <div class="details">
+        <div class="detail"><small>Creator</small><strong>${escapeHtml(l.creator)}</strong></div>
+        <div class="detail"><small>Verifier</small><strong>${escapeHtml(l.verifier)}</strong></div>
+        <div class="detail"><small>Difficulty</small><strong>${escapeHtml(l.difficulty)}</strong></div>
+        <div class="detail"><small>Geometry Dash ID</small><strong>${escapeHtml(l.id)}</strong></div>
+      </div>
+      <p style="color:var(--muted)">Aquí podrás añadir después el vídeo de verificación, showcase, descripción, fecha y estadísticas.</p>
+    `;
+    modal.classList.add("open");
+  }
+
+  function closeModal(){ modal.classList.remove("open"); }
+  document.getElementById("closeModal").addEventListener("click", closeModal);
+  modal.addEventListener("click", e => { if(e.target === modal) closeModal(); });
+  document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
+  searchEl.addEventListener("input", e => render(e.target.value));
+
+  function escapeHtml(value){
+    return String(value).replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[c]));
+  }
+
+  render();
+</script>
+</body>
+</html>
